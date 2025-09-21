@@ -19,13 +19,10 @@ int getPlayerMove(const vector<char>& board, char player) {
     while (true) {
         cout << "Player " << player << ", enter your move (1-9): ";
         string input;
-        if (!(cin >> input)) {               // handle EOF or stream failure
-            cout << "\nInput error. Exiting program.\n";
-            exit(0);                         // safe exit if input closed
-        }
+        cin >> input;
 
         bool onlyDigits = true;
-        if (input.size() > 3) {              // too long (defensive); 3 is more than enough
+        if (input.size() > 3) {             
             onlyDigits = false;
         } else {
             for (char ch : input) {
@@ -41,15 +38,15 @@ int getPlayerMove(const vector<char>& board, char player) {
             continue;
         }
 
-        int move = stoi(input);              // safe now because input is short digits
+        int move = stoi(input);              
         if (!isValidMove(board, move)) {
             cout << "Invalid move. Try again.\n";
             continue;
         }
-
         return move;
     }
 }
+
 int checkWin(const vector<char>& b) {
     const int W[8][3] = {
         {0,1,2}, {3,4,5}, {6,7,8}, 
