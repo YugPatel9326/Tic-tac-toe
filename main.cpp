@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <string>
 using namespace std;
 
 void printBoard(const vector<char>& b) {
@@ -14,21 +15,41 @@ bool isValidMove(const vector<char>& b, int move) {
     return move >= 1 && move <= 9 && b[move - 1] != 'X' && b[move - 1] != 'O';
 }
 
-int getPlayerMove(const vector<char>& b, char player) {
-    int move;
+int getPlayerMove(const vector<char>& board, char player) {
     while (true) {
         cout << "Player " << player << ", enter your move (1-9): ";
-        if (!(cin >> move)) {               
-            cin.clear();
-            cin.ignore(1000, '\n');
+        string input;
+        if (!(cin >> input)) {               // handle EOF or stream failure
+            cout << "\nInput error. Exiting program.\n";
+            exit(0);                         // safe exit if input closed
+        }
+
+        bool onlyDigits = true;
+        if (input.size() > 3) {              // too long (defensive); 3 is more than enough
+            onlyDigits = false;
+        } else {
+            for (char ch : input) {
+                if (ch < '0' || ch > '9') {
+                    onlyDigits = false;
+                    break;
+                }
+            }
+        }
+
+        if (!onlyDigits) {
             cout << "Please enter a number between 1 and 9.\n";
             continue;
         }
-        if (isValidMove(b, move)) return move;
-        cout << "Invalid move. Try again.\n";
+
+        int move = stoi(input);              // safe now because input is short digits
+        if (!isValidMove(board, move)) {
+            cout << "Invalid move. Try again.\n";
+            continue;
+        }
+
+        return move;
     }
 }
-
 int checkWin(const vector<char>& b) {
     const int W[8][3] = {
         {0,1,2}, {3,4,5}, {6,7,8}, 
@@ -45,7 +66,9 @@ int checkWin(const vector<char>& b) {
 }
 
 bool boardFull(const vector<char>& b) {
-    for (char cell : b) if (cell != 'X' && cell != 'O') return false;
+    for (char cell : b) {
+        if (cell != 'X' && cell != 'O') return false;
+    }
     return true;
 }
 
