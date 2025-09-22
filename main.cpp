@@ -34,13 +34,13 @@ int getPlayerMove(const vector<char>& board, char player) {
         }
 
         if (!onlyDigits) {
-            cout << "Please enter a number between 1 and 9.\n";
+            cout << "You must enter a number between 1 and 9\n";
             continue;
         }
 
         int move = stoi(input);              
         if (!isValidMove(board, move)) {
-            cout << "Invalid move. Try again.\n";
+            cout << "Your move is not valid. Please try again\n";
             continue;
         }
         return move;
@@ -83,7 +83,7 @@ int main() {
         int winner = checkWin(board);
         if (winner != 0) {
             printBoard(board);
-            cout << "Player " << (winner == 1 ? 'X' : 'O') << " wins!\n";
+            cout << "Player " << (winner == 1 ? 'X' : 'O') << " is the winner!\n";
             break;
         }
         if (boardFull(board)) {
