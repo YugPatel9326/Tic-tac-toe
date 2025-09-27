@@ -20,6 +20,7 @@ int getPlayerMove(const vector<char>& board, char player) {
         cout << "Player " << player << ", enter your move (1-9): ";
         string input;
         cin >> input;
+        cin.ignore(1000, '\n');
 
         bool onlyDigits = true;
         if (input.size() > 3) {             
