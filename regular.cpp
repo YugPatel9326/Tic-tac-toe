@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <limits>
 using namespace std;
 
 void printBoard(const vector<char>& b);
@@ -13,7 +14,7 @@ int getPlayerMoveRegular(const vector<char>& board, char player) {
         cout << "Player " << player << ", enter your move (1-9): ";
         string input;
         cin >> input;
-        cin.ignore(1000, '\n');
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
         bool onlyDigits = true;
         if (input.size() > 3) onlyDigits = false;
@@ -55,7 +56,7 @@ void playRegularGame() {
         }
         if (boardFull(board)) {
             printBoard(board);
-            cout << "It's a draw!\n";
+            cout << "Game ended in a Tie\n";
             break;
         }
         current = (current == 'X') ? 'O' : 'X';
