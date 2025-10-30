@@ -23,9 +23,9 @@ bool isBattleCellEmpty(const vector<char>& board, int idx) {
 
 void playBattleGame() {
     vector<char> taken;
-    char mark1 = askForMark("Player 1: choose your mark: ", taken);
+    char mark1 = askForMark("Player 1 choose your mark: ", taken);
     taken.push_back(mark1);
-    char mark2 = askForMark("Player 2: choose your mark: ", taken);
+    char mark2 = askForMark("Player 2 choose your mark: ", taken);
     taken.push_back(mark2);
 
     Archetype arch1 = askForArchetype("Player 1 select your archetype");
@@ -40,9 +40,9 @@ void playBattleGame() {
 
     while (true) {
         printBoard(board);
-        cout << "Player (" << currentPlayerMark << ") - ";
+        cout << "Player " << currentPlayerMark << " ";
         Archetype playerArch = getArchForMark(currentPlayerMark);
-        cout << ((playerArch==PALADIN) ? "Paladin" : "Alchemist") << " - choose action:\n";
+        cout << ((playerArch==PALADIN) ? "(Paladin)" : "(Alchemist)") << " make your move:\n";
         cout << "  1) Regular move\n";
         cout << "  2) Special move\n";
         int choice;
@@ -125,7 +125,7 @@ void playBattleGame() {
         }
         if (boardFull(board)) {
             printBoard(board);
-            cout << "It's a draw!\n";
+            cout << "Game ended in a Tie\n";
             break;
         }
 
