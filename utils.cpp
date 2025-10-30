@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <cctype>
+#include <limits>
 using namespace std;
 
 enum Archetype { NONE=0, PALADIN, ALCHEMIST };
@@ -73,7 +74,7 @@ int askForIndex(const string& prompt) {
         cout << prompt;
         string s;
         cin >> s;
-        cin.ignore(1000, '\n');
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         bool onlyDigits = true;
         if (s.size() > 3) onlyDigits = false;
         else {
@@ -91,7 +92,7 @@ Archetype askForArchetype(const string& prompt) {
         cout << prompt << " (Paladin / Alchemist): ";
         string s;
         cin >> s;
-        cin.ignore(1000, '\n');
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         for (auto &c : s) c = tolower(c);
         if (s == "paladin") return PALADIN;
         if (s == "alchemist") return ALCHEMIST;
@@ -104,7 +105,7 @@ char askForMark(const string& prompt, const vector<char>& taken) {
         cout << prompt;
         string s;
         cin >> s;
-        cin.ignore(1000, '\n');
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         if (s.size() != 1) {
             cout << "Please enter exactly one character.\n";
             continue;
@@ -117,7 +118,7 @@ char askForMark(const string& prompt, const vector<char>& taken) {
         bool used = false;
         for (char t : taken) if (t == ch) used = true;
         if (used) {
-            cout << "That mark is already taken. Choose another.\n";
+            cout << "Cannot choose same mark as opponent, please select another.\n";
             continue;
         }
         return ch;
